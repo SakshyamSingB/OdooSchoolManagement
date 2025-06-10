@@ -1,0 +1,64 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+        <record model="ir.ui.view" id="res_partner_form">
+      <field name="name">res.partner.form</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form"/>
+      <field name="arch" type="xml">
+          <xpath expr="//field[@name='company_id']" position="after">
+              <field name="is_student"/>
+          </xpath>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="grade_form">
+      <field name="name">.grade_form</field>
+      <field name="model">grade</field>
+      <field name="arch" type="xml">
+        <form string="Register Payment">
+          <sheet>
+            <group>
+              <field name="name"/>
+              <field name="student_details_id" widget="one2many">
+                  <tree editable="bottom">
+                      <field name="student_id" domain="[('is_student', '=',True), ('grade_id', '=', False)]" context="{'default_is_student': True}"/>
+                      <field name="notes"/>
+                  </tree>
+              </field>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="action_window">
+      <field name="name">.grade window</field>
+      <field name="res_model">grade</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+      <record model="ir.actions.act_window" id="action_window_student">
+      <field name="name">.student window</field>
+      <field name="res_model">res.partner</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[('is_student', '=', True)]</field>
+      <field name="context">{'default_is_student':True}</field>
+    </record>
+
+
+    <!-- Top menu item -->
+    <menuitem name="school_mangement" id="menu_root"/>
+    <!-- menu categories -->
+    <menuitem name="Grade" id="grade_menu" parent="menu_root"/>
+    <menuitem name="Student" id="student_menu" parent="menu_root"/>
+    <!-- actions -->
+    <menuitem name="Student" id="menu_2_list" parent="school_mangement.menu_root"
+              action="school_mangement.action_window_student"/>
+    <menuitem name="Grade" id="menu_1_list" parent="school_mangement.menu_root"
+              action="school_mangement.action_window"/>
+
+  </data>
+</odoo>
