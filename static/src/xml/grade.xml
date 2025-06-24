@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="school_management" xml:space="preserve">
+
+    <t t-name="school_management.test">
+        <div class="text-center">  <!-- Single parent element to allow using renderToElement. -->
+            <h2>11111111111111111 papu</h2>
+        </div>
+    </t>
+
+    <t t-name="school_management.grade_template">
+        <div>
+            <t t-if="grades.length > 0">
+                <ul>
+                    <li t-foreach="grades" t-as="grade" t-key="gradeIndex">
+                        <a t-esc="grade.id"
+                        />
+                        <a t-esc="grade.name"
+                        />
+                    </li>
+                </ul>
+            </t>
+        </div>
+    </t>
+
+</templates>

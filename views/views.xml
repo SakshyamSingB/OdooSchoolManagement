@@ -99,62 +99,34 @@
     <menuitem id="menu_student_list" name="Student" action="student_action_window"
             parent="menu_school_management" sequence="2"/>
 
-    <record id="grade_form" model="ir.ui.view">
+    <record model="ir.ui.view" id="grade_form">
         <field name="name">grade.form</field>
         <field name="model">grade</field>
         <field name="arch" type="xml">
-            <form string="Product Attribute and Values">
-                <group name="main_field">
-                     <field name="name"/>
-                </group>
-                <group name="student_details">
-                    <field name="student_id" widget="many2many_list" context="{'show_attribute': False,'is_student' : True}" >
-                        <tree string="Variants" editable="bottom">
-                            <field name="name" />
-                            <field name="email"/>
-                        </tree>
-                    </field>
-                </group>
-            </form>
-        </field>
+        <form string="Add Student">
+          <sheet>
+            <group>
+              <field name="name"/>
+              <field name="student_details_id" widget="one2many_list">
+                  <tree editable="bottom" delete="1">
+                      <field name="student_id" domain="[('is_student', '=',True), ('grade_id', '=', False)]" context="{'default_is_student': True}"/>
+                      <field name="notes"/>
+                  </tree>
+              </field>
+              <field name="subject_id">
+                <tree editable="false" create="false" delete="false">
+                      <field name="name"/>
+                      <field name="teacher_id"/>
+                </tree>
+              </field>    
+            </group>
+          </sheet>
+        </form>
+      </field>
     </record>
 
 
-    <!-- <record id="grade_ui_view_form" model="ir.ui.view">
-        <field name="name">grade.view.form</field>
-        <field name="model">grade</field>
-        <field name="arch" type="xml">
-            <form string="Grades">
-                <sheet>
-                <group>
-                    <field name="name"/>
-                    <field name="student_details_id" widget="one2many">
-                        <tree editable="top" create="1" delete="1" multi_edit="1" string="Chart of accounts"  open_form_view="True">
-                            <field name="student_id"/>
-                            <field name="notes"/>
-                        </tree>
-                        <form>
-                            <sheet>
-                                <field name="student_id" />
-                                <field name="notes"/>
-                            </sheet>
-                        </form>
-                    </field>   
-                    <field name="student_details_id" widget="one2many" >
-                        <tree string="Values" editable="bottom">
-                            <field name="student_id"/>
-                            <field name="notes"/>
-                        </tree>
-                        <form string="Values">
-                            <field name="student_id"/>
-                            <field name="notes"/>
-                        </form>
-                    </field>
-                </group>    
-                </sheet>     
-            </form>
-        </field>     
-    </record> -->
+
 
 
     <record id="grade_action_window" model="ir.actions.act_window">
@@ -173,6 +145,23 @@
             <field name="res_model">subject</field>
             <field name="view_mode">kanban,tree,form</field>
     </record>
+
+    <record model="ir.ui.view" id="subject_form">
+      <field name="name">subject.form</field>
+        <field name="model">subject</field>
+        <field name="arch" type="xml">
+        <form string="Subject">
+          <sheet>
+            <group>
+              <field name="name"/>
+              <field name="teacher_id" widget="many2many_tags" domain="[('is_teacher', '=',True)]" context="{'default_is_teacher': True}"/>
+              <field name="grade_id"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
 
 
     <menuitem id="menu_subject_list" name="Subject" action="subject_action_window"

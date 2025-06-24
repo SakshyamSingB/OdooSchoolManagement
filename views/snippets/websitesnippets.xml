@@ -1,0 +1,41 @@
+<odoo>
+<template id="add_grade" name="Add Grade Snippet">
+  <section class="custom_snippet" data-snippet="custom_add_grade">
+    <div class="container">
+      <h3>Add Grade from Website</h3>
+        <form class="oe_signup_form" role="form" method="post" t-if="not message">
+            <input type="text" name="name" required="required"/>
+            <field name="students" widgets="one2many">
+                <input type="number" name="id"/>
+                <input type="text" name="name"/>
+            </field>  
+            <button type="submit" class="btn btn-primary"> Add Grade</button>
+        </form>
+            </div>
+      <input type="text" id="grade_name" placeholder="Grade Name" />
+      <button id="submit_grade">Submit</button>
+  </section>
+</template>
+
+
+
+<template id="hello" name="Hello Snippet">
+  <section class="custom_snippet">
+    <div class="container">
+      <h3>Namaste</h3>
+    </div>
+  </section>
+</template>
+
+  <!-- Web page template -->
+  <template id="show_grade_page" name="Show Grades Page" inherit_id="website.layout">
+    <xpath expr="//main" position="replace">
+      <section id="show_grades_section" class="container">
+        <h3>Grades from Website</h3>
+        <div id="grades_list"></div>
+      </section>
+    </xpath>
+  </template>
+
+
+</odoo>
